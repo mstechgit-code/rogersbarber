@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Roger's Barbearia — Agendamentos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <header class="site-header" role="banner">
+    <div class="container header-row">
+      <a href="index.html" class="logo" aria-label="Página inicial da Roger's Barbearia">
+        <svg width="40" height="40" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="2"></path>
+          <path d="M7 12h10" stroke="currentColor" stroke-width="2"></path>
+        </svg>
+        <div>
+          <p class="eyebrow">Roger's Barbearia</p>
+          <h1 class="brand">Barbearia</h1>
+        </div>
+      </a>
+      <nav class="main-nav" role="navigation" aria-label="Menu principal">
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="agendar.html">Agendar</a></li>
+          <li><a href="admin.html">Admin</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container" role="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-intro">
+        <p class="eyebrow">Barbearia</p>
+        <h2 id="hero-title">Roger's Barbearia — cortes de confiança e assinaturas mensais</h2>
+        <p class="lead">Atendimento acolhedor, ambiente limpo e serviço premium para quem quer praticidade e estilo.</p>
+        <div class="hero-actions">
+          <a class="cta" href="agendar.html">Agendar / Assinar</a>
+          <a class="btn" href="#reviews">Ver avaliações</a>
+        </div>
+      </div>
+      <aside class="hero-card" aria-label="Informações da barbearia">
+        <div class="hero-score">5,0<span>★</span></div>
+        <p class="muted">30 avaliações</p>
+        <div class="info-chip open">Aberto · Fecha 19:00</div>
+        <p class="info-line">Av. Eng. Armando de Arruda Pereira, 3150</p>
+        <p class="info-line">Vila Fachini, São Paulo - SP</p>
+        <p class="info-line">(11) 98571-2384</p>
+        <p class="info-tag">Empresa que acolhe a comunidade LGBTQ+</p>
+      </aside>
+    </section>
+
+    <section class="section-summary">
+      <article class="summary-block">
+        <h3>Visão geral</h3>
+        <p>Especializada em cortes e barbas com atendimento dedicado e ambiente confortável.</p>
+      </article>
+      <article class="summary-block">
+        <h3>Avaliações</h3>
+        <p>5,0 de 30 clientes satisfeitos. Destaques para qualidade, cordialidade e limpeza.</p>
+      </article>
+      <article class="summary-block">
+        <h3>Sobre</h3>
+        <p>Barbearia que apoia diversidade e oferece serviços modernos para toda a família.</p>
+      </article>
+    </section>
+
+    <section class="services" aria-labelledby="services-title">
+      <h3 id="services-title">Serviços</h3>
+      <ul id="services-list" class="service-grid" aria-live="polite"></ul>
+    </section>
+
+    <section class="gallery" aria-labelledby="gallery-title">
+      <div class="section-heading"><h3 id="gallery-title">Fotos e vídeo</h3><p>Veja o ambiente e a experiência antes de visitar.</p></div>
+      <div class="photo-grid">
+        <div class="photo-card"><span>Foto do interior</span></div>
+        <div class="photo-card"><span>Ambiente acolhedor</span></div>
+        <div class="photo-card video-card">
+          <video controls poster="poster.jpg">
+            <source src="media/barbearia.mp4" type="video/mp4">
+            Seu navegador não suporta reprodução de vídeo.
+          </video>
+          <p>Veja o vídeo da barbearia</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="reviews" id="reviews" aria-labelledby="reviews-title">
+      <div class="section-heading"><h3 id="reviews-title">Avaliações</h3><p>O que clientes estão falando sobre a Roger's Barbearia.</p></div>
+      <div class="review-grid">
+        <article class="review-card">
+          <p>“Ótimo atendimento, e entrega de serviço perfeito.”</p>
+          <p class="review-author">— cliente satisfeito</p>
+        </article>
+        <article class="review-card">
+          <p>“Barbearia receptiva, ambiente agradável e profissionais de alta qualidade!”</p>
+          <p class="review-author">— cliente fiel</p>
+        </article>
+        <article class="review-card">
+          <p>“Pessoal profissional e qualificado no que faz.”</p>
+          <p class="review-author">— cliente feliz</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="contact" aria-labelledby="contact-title">
+      <h3 id="contact-title">Contato</h3>
+      <p>Endereço: Av. Eng. Armando de Arruda Pereira, 3150 — Vila Fachini, São Paulo</p>
+      <p>Telefone: (11) 98571-2384</p>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <p>© <span id="year"></span> Roger's Barbearia — Todos os direitos reservados</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

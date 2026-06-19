@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Assinar / Agendar — Roger's Barbearia</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#form">Pular para o formulário</a>
+  <header class="site-header">
+    <div class="container header-row">
+      <a href="index.html" class="logo" aria-label="Página inicial da Roger's Barbearia">
+        <p class="eyebrow">Roger's Barbearia</p>
+      </a>
+      <nav class="main-nav" role="navigation" aria-label="Menu principal">
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="agendar.html">Agendar</a></li>
+          <li><a href="admin.html">Admin</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <section class="booking-panel">
+      <div class="booking-header">
+        <p class="eyebrow">Roger's Barbearia</p>
+        <h2>Agendamento</h2>
+        <p class="lead">Escolha seu serviço ou plano mensal. Vamos levar você direto ao WhatsApp para confirmar.</p>
+      </div>
+      <form id="booking-form" aria-describedby="form-desc">
+        <p id="form-desc">Preencha os campos abaixo para agendar. Campos com * são obrigatórios.</p>
+
+      <label for="name">Nome completo *</label>
+      <input id="name" name="name" type="text" required aria-required="true">
+
+      <label for="phone">Telefone *</label>
+      <input id="phone" name="phone" type="tel" required aria-required="true" placeholder="(99) 99999-9999">
+
+      <label for="service">Serviço *</label>
+      <select id="service" name="service" required aria-required="true">
+        <option value="">— Selecione um serviço —</option>
+      </select>
+
+      <label for="date">Data *</label>
+      <input id="date" name="date" type="date" required aria-required="true">
+
+      <label for="time">Horário *</label>
+      <input id="time" name="time" type="time" required aria-required="true">
+
+      <div class="form-actions">
+        <button id="submit-button" type="submit" class="btn primary">Confirmar agendamento</button>
+        <a class="btn" href="index.html">Voltar</a>
+      </div>
+
+      <p id="status" role="status" aria-live="polite" class="status"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year-agendar"></span> Roger's Barbearia</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
