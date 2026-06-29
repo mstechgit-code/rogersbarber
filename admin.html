@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="pt-BR" id="html-root">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self'; img-src 'self' data:;">
+  <title>Administração — Barbearia</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body id="admin-page">
+  <a class="skip-link" href="#main">Pular para conteúdo</a>
+  
+  <!-- SECURITY: Login modal for admin access -->
+  <div id="auth-modal" class="modal-overlay" style="display:flex; align-items:center; justify-content:center;">
+    <div class="modal-content" style="width:100%; max-width:400px;">
+      <h2>Acesso Restrito</h2>
+      <p>Digite a senha de administrador:</p>
+      <input type="password" id="admin-password" placeholder="Senha" style="width:100%; padding:10px; margin:10px 0; border:1px solid #ccc; border-radius:8px;">
+      <button class="btn" id="admin-login" style="width:100%; margin-top:10px;">Entrar</button>
+      <a href="index.html" class="btn btn-secondary" style="width:100%; display:block; text-align:center; margin-top:10px;">Voltar</a>
+    </div>
+  </div>
+  
+  <!-- ADMIN CONTENT (hidden until authenticated) -->
+  <div id="admin-content" style="display:none;">
+  <header class="site-header admin-header">
+    <div class="container header-row">
+      <a href="index.html" class="logo">Barbearia</a>
+      <nav class="main-nav admin-nav" role="navigation" aria-label="Menu principal">
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="agendar.html">Agendar</a></li>
+          <li><a href="admin.html" class="active">Admin</a></li>
+          <li><a href="#" id="admin-logout">Sair</a></li>
+        </ul>
+      </nav>
+      <button id="dark-mode-toggle" class="dark-mode-toggle" title="Alternar tema escuro" aria-label="Modo escuro">
+        <span id="theme-icon">🌙</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main" class="container admin-main">
+    <div class="admin-tabs">
+      <button class="tab-btn active" data-tab="dashboard">📊 Dashboard</button>
+      <button class="tab-btn" data-tab="appointments">📅 Agendamentos</button>
+      <button class="tab-btn" data-tab="timeline">⏰ Timeline</button>
+      <button class="tab-btn" data-tab="settings">⚙️ Configurações</button>
+      <button class="tab-btn" data-tab="history">📝 Histórico</button>
+      <span class="tab-notification" id="pending-badge">0</span>
+    </div>
+
+    <!-- TAB: DASHBOARD -->
+    <div id="dashboard" class="tab-content active">
+      <h2>Dashboard</h2>
+      <section class="stats-section">
+        <div class="stat-card">
+          <span class="stat-label">Hoje</span>
+          <span class="stat-value" id="stat-today">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Semana</span>
+          <span class="stat-value" id="stat-week">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Feitos</span>
+          <span class="stat-value" id="stat-completed">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Cancelados</span>
+          <span class="stat-value" id="stat-cancelled">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Receita</span>
+          <span class="stat-value" id="stat-revenue">R$ 0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Duração</span>
+          <span class="stat-value" id="stat-duration">0h</span>
+        </div>
+      </section>
+
+      <div class="dashboard-charts">
+        <div class="chart-container">
+          <h3>Receita Diária (7 dias)</h3>
+          <canvas id="revenue-chart"></canvas>
+        </div>
+        <div class="chart-container">
+          <h3>Distribuição de Serviços</h3>
+          <canvas id="services-chart"></canvas>
+        </div>
+        <div class="chart-container">
+          <h3>Taxa de Cancelamento</h3>
+          <canvas id="cancellation-chart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: AGENDAMENTOS -->
+    <div id="appointments" class="tab-content">
+      <h2>Agendamentos</h2>
+      
+      <section class="filters-section">
+        <div class="filter-group">
+          <label>Buscar</label>
+          <input type="text" id="filter-search" placeholder="Nome ou telefone..." class="filter-input">
+        </div>
+        <div class="filter-group">
+          <label>Status</label>
+          <select id="filter-status" class="filter-input">
+            <option value="">Todos</option>
+            <option value="pending">Pendentes</option>
+            <option value="completed">Feitos</option>
+            <option value="cancelled">Cancelados</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>De</label>
+          <input type="date" id="filter-date-from" class="filter-input">
+        </div>
+        <div class="filter-group">
+          <label>até</label>
+          <input type="date" id="filter-date-to" class="filter-input">
+        </div>
+        <div class="filter-group">
+          <label>Ordenar</label>
+          <select id="filter-sort" class="filter-input">
+            <option value="date-asc">Data ↑</option>
+            <option value="date-desc">Data ↓</option>
+            <option value="name">Nome A-Z</option>
+            <option value="price-desc">Valor ↓</option>
+          </select>
+        </div>
+        <div class="filter-actions">
+          <button class="btn" id="filter-apply">Filtrar</button>
+          <button class="btn btn-secondary" id="filter-reset">Limpar</button>
+          <button class="btn btn-secondary" id="filter-export">📥 Exportar CSV</button>
+          <button class="btn btn-secondary" id="filter-print">🖨️ Imprimir</button>
+        </div>
+      </section>
+
+      <div class="batch-actions" id="batch-actions" style="display:none;">
+        <label><input type="checkbox" id="select-all-appts"> Selecionar todos</label>
+        <button class="btn" id="batch-done">Marcar feitos</button>
+        <button class="btn btn-danger" id="batch-cancel">Cancelar</button>
+        <button class="btn btn-danger" id="batch-delete">Deletar</button>
+      </div>
+
+      <section class="appointments-section" id="appointments-section">
+        <h3 class="appointments-title">Agendamentos <span id="appt-count">(0)</span></h3>
+        <p id="no-appointments">Carregando agendamentos...</p>
+        <ul id="appointments-list" class="appointments-list"></ul>
+        <div class="pagination" id="pagination"></div>
+      </section>
+    </div>
+
+    <!-- TAB: TIMELINE -->
+    <div id="timeline" class="tab-content">
+      <h2>Timeline do Dia</h2>
+      <div class="timeline-controls">
+        <input type="date" id="timeline-date" class="filter-input">
+        <button class="btn" id="timeline-today">Hoje</button>
+      </div>
+      <div id="timeline-view" class="timeline-view"></div>
+    </div>
+
+    <!-- TAB: CONFIGURAÇÕES -->
+    <div id="settings" class="tab-content">
+      <h2>Configurações</h2>
+      <div class="settings-grid">
+        <div class="settings-section">
+          <h3>Horário de Funcionamento</h3>
+          <label>Segunda a Sexta:
+            <input type="time" id="setting-weekday-start" value="09:00"> até
+            <input type="time" id="setting-weekday-end" value="19:00">
+          </label>
+          <label>Sábado:
+            <input type="time" id="setting-saturday-start" value="09:00"> até
+            <input type="time" id="setting-saturday-end" value="17:00">
+          </label>
+        </div>
+        
+        <div class="settings-section">
+          <h3>Dados da Barbearia</h3>
+          <label>WhatsApp:
+            <input type="text" id="setting-whatsapp" placeholder="5511989389074" class="filter-input">
+          </label>
+          <label>Email:
+            <input type="email" id="setting-email" placeholder="contato@barbearia.com" class="filter-input">
+          </label>
+        </div>
+
+        <div class="settings-section full-width">
+          <h3>Backup & Dados</h3>
+          <button class="btn" id="backup-download">⬇️ Baixar Backup (JSON)</button>
+          <button class="btn btn-secondary" id="backup-upload">⬆️ Restaurar Backup</button>
+          <input type="file" id="backup-file" accept=".json" style="display:none;">
+          <button class="btn btn-danger" id="backup-clear">🗑️ Limpar Todos os Dados</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: HISTÓRICO -->
+    <div id="history" class="tab-content">
+      <h2>Histórico de Alterações</h2>
+      <div class="history-filters">
+        <select id="history-filter" class="filter-input">
+          <option value="">Todos os eventos</option>
+          <option value="completed">Marcado como feito</option>
+          <option value="cancelled">Cancelado</option>
+          <option value="edited">Editado</option>
+          <option value="deleted">Deletado</option>
+        </select>
+        <input type="date" id="history-date" class="filter-input">
+      </div>
+      <ul id="history-list" class="history-list"></ul>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year-admin"></span> Barbearia</p>
+    </div>
+  </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+  <script src="script-admin.js" defer></script>
+</body>
+</html>
