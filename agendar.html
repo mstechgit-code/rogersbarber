@@ -31,6 +31,15 @@
         <h2>Agendamento</h2>
         <p class="lead">Escolha seu serviço ou plano mensal. Vamos levar você direto ao WhatsApp para confirmar.</p>
       </div>
+
+      <section class="availability-panel" aria-live="polite">
+        <div class="section-heading">
+          <h3>Disponibilidade do dia</h3>
+          <p>Veja em tempo real os horários ocupados ou livres.</p>
+        </div>
+        <div id="availability-list" class="availability-list"></div>
+      </section>
+
       <form id="booking-form" aria-describedby="form-desc">
         <p id="form-desc">Preencha os campos abaixo para agendar. Campos com * são obrigatórios.</p>
 
@@ -45,11 +54,27 @@
         <option value="">— Selecione um serviço —</option>
       </select>
 
-      <label for="date">Data *</label>
-      <input id="date" name="date" type="date" required aria-required="true">
+      <div id="weekday-field" class="form-field hidden">
+        <label for="weekday">Qual melhor dia da semana para seu serviço? *</label>
+        <select id="weekday" name="weekday" aria-required="true">
+          <option value="">— Escolha o dia —</option>
+          <option value="1">Seg</option>
+          <option value="2">Ter</option>
+          <option value="3">Qua</option>
+          <option value="4">Qui</option>
+          <option value="5">Sex</option>
+          <option value="6">Sab</option>
+        </select>
+      </div>
+      <p id="monthly-note" class="monthly-note hidden">Atenção, planos mensais têm direito a serviços ilimitados no mês, em caso de alteração de agendamentos, verificar disponibilidade por WhatsApp.</p>
+
+      <div id="date-field" class="form-field">
+        <label for="date">Data *</label>
+        <input id="date" name="date" type="date" required aria-required="true">
+      </div>
 
       <label for="time">Horário *</label>
-      <input id="time" name="time" type="time" required aria-required="true">
+      <select id="time" name="time" required aria-required="true"></select>
 
       <div class="form-actions">
         <button id="submit-button" type="submit" class="btn primary">Confirmar agendamento</button>
